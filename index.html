@@ -65,7 +65,7 @@
      -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;     /* Firefox */
   }
-    html { font-size: 15px; }
+    html { font-size: 10px; }
     body {
       background: var(--secondary) ;
       font-family: 'Poppins', sans-serif;
@@ -110,9 +110,7 @@
       box-shadow: 0 3px 8px rgba(0,0,0,0.08);
       transition: transform 0.2s ease;
     }
-    .topic-card:hover {
-      transform: translateY(-5px);
-    }
+    
     .topic-icon {
       font-size: 2rem;
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
@@ -182,7 +180,7 @@
    
     .offcanvas {
        background: #FFFFFF ;
-       max-width: 85%;
+       max-width: 90%;
        border: none;
     }
     .offcanvas li {
@@ -200,6 +198,7 @@
        background: var(--primary) ;
        color: #fff;
       }
+    
   </style>
 </head>
 <body>
@@ -208,7 +207,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="#"> Dashavatara </a>
-        <button class="btn btn-light ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+        <button class="btn ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
           <i class="bi bi-list"></i>
         </button>
       </div>
