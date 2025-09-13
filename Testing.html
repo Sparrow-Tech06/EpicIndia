@@ -1,1 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no,viewport-fit=cover"> 
+  
+  <title> Dashavatara </title>
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
+  <style>
+    :root{
+      --primary: #799EFF;
+      --secondary: #F5F7FF;
+      --card-bg:#f4f9fd;
+      --chip:#eaf3fa;
+      --radius: 16px;
+    }
+    body {
+      background: var(--secondary);
+      font-family: 'Poppins', sans-serif;
+      max-width: 660px;
+      margin: auto;
+      padding: 10px 15px ;
+    }
+    .subject-card{
+      border: 0; 
+      background: var(--card-bg); 
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(35,72,99,.06);
+      transition: transform .15s ease;
+      display:flex; 
+      flex-direction:column;
+      padding: 8px 8px;
+    }
+    .subject-card:hover {
+      transform: translateY(-2px);
+    }
+    .thumb img{ 
+      width: 100%; 
+      min-height: 90px; 
+      height: 90px; 
+      object-fit: cover; 
+      display:none;
+      border-radius: calc(var(--radius) - 8px);
+    }
+    .card-title{ 
+      font-weight: 600; 
+      margin: 8px 0 2px;
+      text-align: center;
+      font-size: 14px ;
+    }
+    .explore-link{
+      margin: 10px auto 4px;
+      border-radius: 10px;
+      padding: 5px 10px; 
+      font-weight: 500;
+      background: var(--primary);
+      color:#fff; 
+      text-decoration:none; 
+      display:inline-block; 
+      font-size: 13px;
+    }
+    /* Search + Filter container */
+    .search-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .search-box {
+      flex: 0 0 80%;
+      position: relative;
+    }
+    .search-box input {
+      padding-left: 32px;
+    }
+    .search-box .bi-search {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #6c757d;
+      font-size: 16px;
+    }
+    .filter-box {
+      flex: 0 0 20%;
+    }
+    .filter-box select {
+      padding-left: 8px;
+    }
+    /* Skeleton Loader */
+    .skeleton {
+      width: 100%;
+      height: 90px;
+      border-radius: calc(var(--radius) - 8px);
+      background: linear-gradient(-135deg, #e1e9f0 25%, #f2f6fa 50%, #e1e9f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    @keyframes shimmer {
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h4 class="mb-3 fw-semibold"> Explore Sightseeing Places </h4>
+
+  <!-- 🔎 Search + Filter Controls -->
+  <div class="search-filter">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" id="searchBox" class="form-control form-control-sm" placeholder="Search places...">
+    </div>
+    <div class="filter-box">
+      <select id="categoryFilter" class="form-select form-select-sm">
+        <option value="">All</option>
+        <option value="monument">Monuments</option>
+        <option value="temple">Temples</option>
+        <option value="fort">Forts</option>
+        <option value="palace">Palaces</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Container -->
+  <section>
+    <div class="row g-3" id="subjectContainer"></div>
+  </section>
+
+  <script>
+    const subjects = [
+      { title: "Taj Mahal", img: "Assets/Taj_mahal.png", url: "Pages/matsha.html", category: "monument" },
+      { title: "Qutub Minar", img: "Assets/Qutub_minar.png", url: "Pages/kurma.html", category: "monument" },
+      { title: "Gateway of India", img: "Assets/Gataway_of_india.png", url: "physics.html", category: "monument" },
+      { title: "India Gate", img: "Assets/India_gate.png", url: "geography.html", category: "monument" },
+      { title: "Vrindabon", img: "Assets/Mysore_palace.png", url: "maths.html", category: "temple" },
+      { title: "Red Fort", img: "Assets/Red_fort.png", url: "languages.html", category: "fort" },
+      { title: "Victoria Memorial", img: "Assets/vectoria.png", url: "physics.html", category: "palace" },
+      { title: "Narasimha Avatar", img: "Assets/Narasimha.png", url: "geography.html", category: "temple" },
+      { title: "Vrindabon", img: "https://picsum.photos/seed/maths/200", url: "maths.html", category: "temple" },
+      { title: "Hampi", img: "Assets/hampi.png", url: "chemistry.html", category: "fort" },
+    ];
+
+    const container = document.getElementById("subjectContainer");
+    const searchBox = document.getElementById("searchBox");
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    function renderSubjects() {
+      const searchText = searchBox.value.toLowerCase();
+      const category = categoryFilter.value;
+
+      container.innerHTML = "";
+
+      const filtered = subjects.filter(sub => {
+        const matchText = sub.title.toLowerCase().includes(searchText);
+        const matchCat = category === "" || sub.category === category;
+        return matchText && matchCat;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-muted text-center">Not found, try another</p>`;
+        return;
+      }
+
+      filtered.forEach(sub => {
+        const col = document.createElement("article");
+        col.className = "col-6";
+
+        const card = document.createElement("div");
+        card.className = "subject-card h-100";
+
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+
+        const skeleton = document.createElement("div");
+        skeleton.className = "skeleton";
+        thumb.appendChild(skeleton);
+
+        const img = document.createElement("img");
+        img.src = sub.img;
+        img.alt = sub.title;
+        img.draggable = false;
+        img.onload = () => {
+          skeleton.remove();
+          img.style.display = "block";
+        };
+        thumb.appendChild(img);
+
+        const titleBox = document.createElement("div");
+        titleBox.className = "px-1";
+        const h2 = document.createElement("h2");
+        h2.className = "card-title h6";
+        h2.textContent = sub.title;
+        titleBox.appendChild(h2);
+
+        const link = document.createElement("a");
+        link.href = sub.url;
+        link.className = "explore-link";
+        link.textContent = "Explore";
+
+        card.appendChild(thumb);
+        card.appendChild(titleBox);
+        card.appendChild(link);
+
+        col.appendChild(card);
+        container.appendChild(col);
+      });
+    }
+
+    searchBox.addEventListener("input", renderSubjects);
+    categoryFilter.addEventListener("change", renderSubjects);
+    renderSubjects();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+  </html>
