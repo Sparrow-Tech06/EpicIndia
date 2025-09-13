@@ -172,6 +172,34 @@
       align-items:center; justify-content:center; 
     }
 
+    /* Search + Filter container */
+    .search-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .search-box {
+      flex: 0 0 80%;
+      position: relative;
+    }
+    .search-box input {
+      padding-left: 32px;border-radius:20px;
+    }
+    .search-box .bi-search {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #6c757d;
+      font-size: 16px;
+    }
+    .filter-box {
+      flex: 0 0 20%;
+    }
+    .filter-box select {
+      padding-left: 8px;
+    }
+    
     /* Skeleton Loader */
     .skeleton {
       width: 100%;
@@ -258,6 +286,23 @@
   </div>
 
   <!-- Topics -->
+  <!-- 🔎 Search + Filter Controls -->
+  <div class="search-filter">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" id="searchBox" class="form-control form-control-sm" placeholder="Search places...">
+    </div>
+    <div class="filter-box">
+      <select id="categoryFilter" class="form-select form-select-sm">
+        <option value="">All</option>
+        <option value="monument">Monuments</option>
+        <option value="temple">Temples</option>
+        <option value="fort">Forts</option>
+        <option value="palace">Palaces</option>
+      </select>
+    </div>
+  </div>
+  
   <h3 class="topics-title"> Explore Sightseeing place </h3>
      <section>
       <div class="row g-3" id="subjectContainer"></div>
