@@ -310,74 +310,90 @@
   </div>
 
   <script>
-    // Subject Data Array
     const subjects = [
-      { title: "taj Mahal", img: "Assets/Taj_mahal.png", url: "Pages/matsha.html" },
-      { title: "qutub minar", img: "Assets/Qutub_minar.png", url: "Pages/kurma.html" },
-      { title: "Gateway of india", img: "Assets/Gataway_of_india.png", url: "physics.html" },
-      { title: "Narasimha avatar", img: "Assets/India_gate.png", url: "geography.html" },
-      { title: "Vrindabon", img: "Assets/Mysore_palace.png", url: "maths.html" },
-      { title: "Kurma avatar", img: "Assets/Red_fort.png", url: "languages.html" },
-      { title: "Baraha avatar", img: "Assets/vectoria.png", url: "physics.html" },
-      { title: "Narasimha avatar", img: "Assets/Narasimha.png", url: "geography.html" },
-      { title: "Vrindabon", img: "https://picsum.photos/seed/maths/200", url: "maths.html" },
-      { title: "Hampi", img: "Assets/hampi.png", url: "chemistry.html" },
+      { title: "Taj Mahal", img: "Assets/Taj_mahal.png", url: "Pages/matsha.html", category: "monument" },
+      { title: "Qutub Minar", img: "Assets/Qutub_minar.png", url: "Pages/kurma.html", category: "monument" },
+      { title: "Gateway of India", img: "Assets/Gataway_of_india.png", url: "physics.html", category: "monument" },
+      { title: "India Gate", img: "Assets/India_gate.png", url: "geography.html", category: "monument" },
+      { title: "Vrindabon", img: "Assets/Mysore_palace.png", url: "maths.html", category: "temple" },
+      { title: "Red Fort", img: "Assets/Red_fort.png", url: "languages.html", category: "fort" },
+      { title: "Victoria Memorial", img: "Assets/vectoria.png", url: "physics.html", category: "palace" },
+      { title: "Narasimha Avatar", img: "Assets/Narasimha.png", url: "geography.html", category: "temple" },
+      { title: "Vrindabon", img: "https://picsum.photos/seed/maths/200", url: "maths.html", category: "temple" },
+      { title: "Hampi", img: "Assets/hampi.png", url: "chemistry.html", category: "fort" },
     ];
 
     const container = document.getElementById("subjectContainer");
+    const searchBox = document.getElementById("searchBox");
+    const categoryFilter = document.getElementById("categoryFilter");
 
-    subjects.forEach(sub => {
-      // Create card wrapper
-      const col = document.createElement("article");
-      col.className = "col-6";
+    function renderSubjects() {
+      const searchText = searchBox.value.toLowerCase();
+      const category = categoryFilter.value;
 
-      const card = document.createElement("div");
-      card.className = "subject-card h-100";
+      container.innerHTML = "";
 
-      // Thumb with skeleton
-      const thumb = document.createElement("div");
-      thumb.className = "thumb";
+      const filtered = subjects.filter(sub => {
+        const matchText = sub.title.toLowerCase().includes(searchText);
+        const matchCat = category === "" || sub.category === category;
+        return matchText && matchCat;
+      });
 
-      const skeleton = document.createElement("div");
-      skeleton.className = "skeleton";
-      thumb.appendChild(skeleton);
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-muted text-center">Not found, try another</p>`;
+        return;
+      }
 
-      const img = document.createElement("img");
-      img.src = sub.img;
-      img.alt = sub.title;
-      img.draggable = false;
+      filtered.forEach(sub => {
+        const col = document.createElement("article");
+        col.className = "col-6";
 
-      // Image load event => replace skeleton
-      img.onload = () => {
-        skeleton.remove();
-        img.style.display = "block";
-      };
+        const card = document.createElement("div");
+        card.className = "subject-card h-100";
 
-      thumb.appendChild(img);
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
 
-      // Title
-      const titleBox = document.createElement("div");
-      titleBox.className = "px-1";
-      const h2 = document.createElement("h2");
-      h2.className = "card-title h6";
-      h2.textContent = sub.title;
-      titleBox.appendChild(h2);
+        const skeleton = document.createElement("div");
+        skeleton.className = "skeleton";
+        thumb.appendChild(skeleton);
 
-      // Explore link
-      const link = document.createElement("a");
-      link.href = sub.url;
-      link.className = "explore-link";
-      link.textContent = "Explore";
+        const img = document.createElement("img");
+        img.src = sub.img;
+        img.alt = sub.title;
+        img.draggable = false;
+        img.onload = () => {
+          skeleton.remove();
+          img.style.display = "block";
+        };
+        thumb.appendChild(img);
 
-      // Build card
-      card.appendChild(thumb);
-      card.appendChild(titleBox);
-      card.appendChild(link);
+        const titleBox = document.createElement("div");
+        titleBox.className = "px-1";
+        const h2 = document.createElement("h2");
+        h2.className = "card-title h6";
+        h2.textContent = sub.title;
+        titleBox.appendChild(h2);
 
-      col.appendChild(card);
-      container.appendChild(col);
-    });
+        const link = document.createElement("a");
+        link.href = sub.url;
+        link.className = "explore-link";
+        link.textContent = "Explore";
+
+        card.appendChild(thumb);
+        card.appendChild(titleBox);
+        card.appendChild(link);
+
+        col.appendChild(card);
+        container.appendChild(col);
+      });
+    }
+
+    searchBox.addEventListener("input", renderSubjects);
+    categoryFilter.addEventListener("change", renderSubjects);
+    renderSubjects();
   </script>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
  
   <! -- This File Fetch current version & auto refresh the page -->
