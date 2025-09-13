@@ -60,6 +60,7 @@
       position: absolute;
       width: calc(100% - 40px);
     }
+    .article-part p { font-size:14px ; }
     .article-part.active {
       opacity: 1;
     }
