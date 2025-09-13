@@ -6,12 +6,12 @@
        user-select:none;
       }
    :root {
-       --primary-color:  #ff3b6e ; /*  #198754; */
+       --primary-color:  #FF6F61 ; /*  #198754; */
        --background: #fff;
        --text-color: #000;
        --box-color : #fff;
        --success: /* #198754; */ #ff3b6e ;
-       --secondary: #6c757d;
+       --secondary: #FF6F61;
        --overlay : #ffffff;
      }
     body {
