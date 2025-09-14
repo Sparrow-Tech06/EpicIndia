@@ -6,12 +6,12 @@
        user-select:none;
       }
    :root {
-       --primary-color:  #FF6F61 ; /*  #198754; */
+       --primary-color:  #F39C12 ; /*  #198754; */
        --background: #fff;
        --text-color: #000;
        --box-color : #fff;
-       --success: /* #198754; */ #ff6f61 ;
-       --secondary: #FF6F61;
+       --success: /* #198754; */ #F39C12 ;
+       --secondary: #2c3e50 ;
        --overlay : #ffffff;
      }
     body {
@@ -113,7 +113,7 @@
     }
 
   .navbar {
-       background: #799EFF ;
+       background: #2c3e50 ;
        position: sticky ;
        top: 0px;
   }
